@@ -1,8 +1,8 @@
 # LocoBench Picker: v0.1 prototype
 
-Interactive GPU selection tool for people building local AI inference nodes. Reads the LocoBench benchmark dataset, plots it across user-chosen axes, and highlights the Pareto frontier so you can see the candidates that aren't dominated on both cost and performance.
+Interactive GPU selection tool for people building local AI inference nodes. Reads the LocoBench benchmark dataset, plots it across user-chosen axes, and marks the Pareto frontier so you can see the candidates that aren't dominated on both cost and performance.
 
-Not "top 3 cards." Not editorial. A plot that honestly shows the tradeoffs, and lets the shortlist fall out of the data.
+A plot that shows the tradeoffs and lets the shortlist fall out of the data.
 
 ## What this is
 
@@ -37,12 +37,12 @@ Dependencies are CDN-hosted (D3 v7, Google Fonts). First paint needs internet; s
 - Model-size shortcut: "I want to run 13B at Q4_K_M" auto-sets the min VRAM slider and selects the matching benchmark.
 - Currency toggle (AUD / USD) using a canonical USD value × exchange-rate multiplier. Persists via `localStorage`.
 - Hover tooltips with card specs, benchmark value, and confidence tag.
-- Click a dot → detail panel with full specs, all benchmark results, and notes.
+- Click a dot to open a detail panel with full specs, all benchmark results, and notes.
 - Explicit framing at the top: *"Each measurement is a tier floor, not a ranking."*
 
 ## Aesthetic direction
 
-Lab-bench instrument. Dark warm-navy background (not pure black, but a slight paper-under-lamp warmth). IBM Plex Sans + Mono throughout. Amber phosphor for important data (Pareto frontier, measured values, data callouts). Cyan for interactive controls. Corner brackets on the plot frame and section headers (borrowing from oscilloscope / DSO graphics). No marketing polish.
+Lab-bench instrument. Dark warm-navy background with a slight paper-under-lamp warmth. IBM Plex Sans + Mono throughout. Amber phosphor for important data (Pareto frontier, measured values, data callouts). Cyan for interactive controls. Corner brackets on the plot frame and section headers (borrowing from oscilloscope / DSO graphics). No marketing polish.
 
 ## Data contract
 
@@ -61,7 +61,7 @@ Schema version is declared in `schema_version`. When it changes, bump and migrat
 
 ## The confidence field
 
-- `measured`: LocoBench harness actually ran this on this card.
+- `measured`: LocoBench harness ran this on this card.
 - `community`: external contributor supplied the number (source should be in `notes`).
 - `estimated`: inferred from specs, no real run. Rendered as an open dot with a dashed outline and an `ESTIMATED` tag in the tooltip.
 
@@ -84,14 +84,14 @@ Everything else (filters, axes, Pareto computation, UI) consumes only the merged
 
 ## What v0.2+ would add
 
-- **Real data.** Replace placeholder values with actual LocoBench harness output.
-- **Shareable URLs.** Serialize filter state + selected card into the URL so you can send someone a specific view.
-- **Detail panel as a route.** Move from inline to `/card/rtx-3090-24gb`-style so you can deep-link.
-- **"Similar or better" list** on the detail panel: uses the "floor" framing to surface cards that strictly dominate the selected one (same VRAM + higher bandwidth, or newer arch at same specs, or strictly more VRAM).
-- **More benchmarks.** Agent benchmarks (SWE-Bench), additional quantisations, additional models, latency metrics (time-to-first-token).
-- **Community contribution flow.** Pull-request-based submission of benchmark results, validated against the schema.
-- **Multi-GPU scenarios.** Pairs and trios (NVLink or PCIe tensor parallelism) as virtual entries.
-- **Power-efficiency axis.** `tokens_per_sec / watt` as a derived metric.
+- Real data. Replace placeholder values with actual LocoBench harness output.
+- Shareable URLs. Serialize filter state + selected card into the URL so you can send someone a specific view.
+- Detail panel as a route. Move from inline to `/card/rtx-3090-24gb`-style so you can deep-link.
+- "Similar or better" list on the detail panel: uses the "floor" framing to surface cards that strictly dominate the selected one (same VRAM + higher bandwidth, or newer arch at same specs, or strictly more VRAM).
+- More benchmarks. Agent benchmarks (SWE-Bench), additional quantisations, additional models, latency metrics (time-to-first-token).
+- Community contribution flow. Pull-request-based submission of benchmark results, validated against the schema.
+- Multi-GPU scenarios. Pairs and trios (NVLink or PCIe tensor parallelism) as virtual entries.
+- Power-efficiency axis. `tokens_per_sec / watt` as a derived metric.
 
 ## Files
 
